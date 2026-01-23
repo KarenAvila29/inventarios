@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import com.krakedev.inventarios.entidades.Categoria;
 import com.krakedev.inventarios.entidades.Producto;
+
 import com.krakedev.inventarios.entidades.UnidadDeMedida;
 import com.krakedev.inventarios.excepciones.KrakeDevException;
 import com.krakedev.inventarios.utils.ConexionBdd;
@@ -81,5 +82,42 @@ public class ProductoBDD {
 			throw new KrakeDevException("Error al consultar. Detalle: " + e.getMessage());
 		}
 		return productos;
+	}
+	
+	
+	public void crear(Producto producto) throws KrakeDevException{
+		Connection con=null;
+		try {
+			con=ConexionBdd.obtenerConexion();
+			PreparedStatement ps=con.prepareStatement("insert into producto(codigo_pro,nombre,umd,precio_venta,tiene_iva,coste,categoria,stock) values(?,?,?,?,?,?,?,?)");
+			
+		ps.setString(1, producto.getCodigo_pro());
+		ps.setString(2, producto.getNombre());
+		ps.setString(3, producto.getUnidadMedida().getNombre());
+		ps.setBigDecimal(4, producto.getPrecioVenta());
+		ps.setBoolean(5, producto.isTieneIva());
+		ps.setBigDecimal(6, producto.getCoste());
+		ps.setInt(7, producto.getCategoria().getCodigo());
+		ps.setInt(8, producto.getStock());
+		
+		
+		
+		ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new KrakeDevException("Error al insertar el cliente. Detalle: " + e.getMessage());
+	
+		} catch (KrakeDevException e) {
+			throw e;
+		}finally {
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+		}
 	}
 }
