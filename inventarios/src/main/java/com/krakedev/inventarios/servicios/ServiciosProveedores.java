@@ -11,7 +11,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.glassfish.jersey.message.internal.MediaTypes;
 
 
 import com.krakedev.inventarios.bdd.ProveedoresBDD;
