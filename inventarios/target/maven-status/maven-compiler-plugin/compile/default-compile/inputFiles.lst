@@ -1,8 +1,11 @@
 C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\krakedev\inventarios\excepciones\KrakeDevException.java
 C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\krakedev\inventarios\entidades\UnidadDeMedida.java
+C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\krakedev\inventarios\servicios\ServiciosPedidos.java
+C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\krakedev\inventarios\entidades\Pedido.java
 C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\krakedev\inventarios\servicios\ServiciosProveedores.java
 C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\krakedev\inventarios\bdd\ProductoBDD.java
 C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\krakedev\inventarios\bdd\ProveedoresBDD.java
+C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\krakedev\inventarios\entidades\DetallePedido.java
 C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\krakedev\inventarios\entidades\CategoriaUDM.java
 C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\krakedev\inventarios\bdd\TiposDatosBDD.java
 C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\krakedev\inventarios\entidades\Proveedor.java
@@ -12,3 +15,5 @@ C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\kraked
 C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\krakedev\inventarios\entidades\Categoria.java
 C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\krakedev\inventarios\servicios\ServiciosTiposDatos.java
 C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\krakedev\inventarios\utils\ConexionBdd.java
+C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\krakedev\inventarios\bdd\PedidosBDD.java
+C:\Users\Karen Avila\Documents\MODULO 2\Web\inventarios\src\main\java\com\krakedev\inventarios\entidades\EstadoPedido.java
