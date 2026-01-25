@@ -35,6 +35,7 @@ public class PedidosBDD {
 			
 		//ps.executeUpdate();
 		rsClave = ps.executeQuery();
+		
 		if(rsClave.next()) {
 		codigoCabecera=rsClave.getInt("numero");
 		}

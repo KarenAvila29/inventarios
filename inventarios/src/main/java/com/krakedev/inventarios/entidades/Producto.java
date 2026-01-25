@@ -32,6 +32,7 @@ public class Producto {
 	}
 
 
+
 	public String getCodigo_pro() {
 		return codigo_pro;
 	}
