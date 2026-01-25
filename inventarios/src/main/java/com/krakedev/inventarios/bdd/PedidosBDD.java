@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
+
 import com.krakedev.inventarios.entidades.DetallePedido;
 import com.krakedev.inventarios.entidades.Pedido;
 import com.krakedev.inventarios.excepciones.KrakeDevException;
@@ -73,4 +74,52 @@ public class PedidosBDD {
 			
 		}
 	}
+	
+	public void recibir(Pedido pedido) throws KrakeDevException {
+
+	    Connection con = null;
+	    PreparedStatement ps = null;
+	    PreparedStatement psDet = null;
+
+	    try {
+	        con = ConexionBdd.obtenerConexion();
+	        con.setAutoCommit(false);
+
+	        // 1. Cambiar estado a RECIBIDO
+	        ps = con.prepareStatement(
+	            "UPDATE cabecera_pedido SET estado = 'R' WHERE numero = ?");
+	        ps.setInt(1, pedido.getCodigo()); // o getNumero()
+	        ps.executeUpdate();
+
+	        // 2. Actualizar detalles
+	        for (DetallePedido det : pedido.getDetalles()) {
+
+	            BigDecimal precio = det.getProducto().getPrecioVenta();
+	            BigDecimal cantidad = new BigDecimal(det.getCantidadRecibida());
+	            BigDecimal subtotal = precio.multiply(cantidad);
+
+	            psDet = con.prepareStatement(
+	                "UPDATE detalle_pedido " +
+	                "SET cantidad_recibida=?, subtotal=? " +
+	                "WHERE cabecera_ped=? AND producto=?");
+
+	            psDet.setInt(1, det.getCantidadRecibida());
+	            psDet.setBigDecimal(2, subtotal);
+	            psDet.setInt(3, pedido.getCodigo());
+	            psDet.setString(4, det.getProducto().getCodigo_pro());
+
+	            psDet.executeUpdate();
+	        }
+
+	        con.commit();
+
+	    } catch (SQLException e) {
+	        try { if (con != null) con.rollback(); } catch (SQLException ex) {}
+	        throw new KrakeDevException("Error al recibir pedido: " + e.getMessage());
+
+	    } finally {
+	        try { if (con != null) con.close(); } catch (SQLException e) {}
+	    }
+	}
+
 }
