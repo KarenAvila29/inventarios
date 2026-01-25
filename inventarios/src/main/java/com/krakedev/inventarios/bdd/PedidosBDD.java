@@ -80,6 +80,7 @@ public class PedidosBDD {
 	    Connection con = null;
 	    PreparedStatement ps = null;
 	    PreparedStatement psDet = null;
+	    PreparedStatement psHist = null;
 
 	    try {
 	        con = ConexionBdd.obtenerConexion();
@@ -88,16 +89,19 @@ public class PedidosBDD {
 	        // 1. Cambiar estado a RECIBIDO
 	        ps = con.prepareStatement(
 	            "UPDATE cabecera_pedido SET estado = 'R' WHERE numero = ?");
-	        ps.setInt(1, pedido.getCodigo()); // o getNumero()
+	        ps.setInt(1, pedido.getCodigo());
 	        ps.executeUpdate();
 
-	        // 2. Actualizar detalles
-	        for (DetallePedido det : pedido.getDetalles()) {
+	        // 2. Recorrer detalles con for clásico
+	        ArrayList<DetallePedido> detallesPedidos = pedido.getDetalles();
+	        for (int i = 0; i < detallesPedidos.size(); i++) {
+	            DetallePedido det = detallesPedidos.get(i);
 
 	            BigDecimal precio = det.getProducto().getPrecioVenta();
 	            BigDecimal cantidad = new BigDecimal(det.getCantidadRecibida());
 	            BigDecimal subtotal = precio.multiply(cantidad);
 
+	            // actualizar detalle
 	            psDet = con.prepareStatement(
 	                "UPDATE detalle_pedido " +
 	                "SET cantidad_recibida=?, subtotal=? " +
@@ -107,8 +111,18 @@ public class PedidosBDD {
 	            psDet.setBigDecimal(2, subtotal);
 	            psDet.setInt(3, pedido.getCodigo());
 	            psDet.setString(4, det.getProducto().getCodigo_pro());
-
 	            psDet.executeUpdate();
+
+	            // registrar historial dentro del mismo for
+	            psHist = con.prepareStatement(
+	                "INSERT INTO historial_stock(fecha, referencia, producto_id, cantidad) " +
+	                "VALUES (?, ?, ?, ?)");
+
+	            psHist.setDate(1, new java.sql.Date(new Date().getTime()));
+	            psHist.setString(2, "PEDIDO " + pedido.getCodigo());
+	            psHist.setString(3, det.getProducto().getCodigo_pro());
+	            psHist.setInt(4, det.getCantidadRecibida());
+	            psHist.executeUpdate();
 	        }
 
 	        con.commit();
@@ -121,5 +135,6 @@ public class PedidosBDD {
 	        try { if (con != null) con.close(); } catch (SQLException e) {}
 	    }
 	}
+
 
 }
